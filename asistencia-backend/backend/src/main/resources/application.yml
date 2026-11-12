@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: asistencia-backend
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 20MB
+  datasource:
+    url: "${DB_URL:jdbc:postgresql://localhost:5432/asistencia_escolar}"
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 10000
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 1
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+        jdbc:
+          time_zone: America/Mexico_City
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+    show-sql: false
+
+escuela:
+  nombre: "Secundaria Frida Kahlo"
+  ciclo-escolar: "2026-2027"
+
+cors:
+  origenes-permitidos: "http://localhost:4200"
+
+jwt:
+  # Obligatorio. Mínimo 32 caracteres (256 bits para HS256). Sin valor por defecto.
+  secreto: ${JWT_SECRET}
+  expiracion-minutos: 480
+
+app:
+  seed-data: "${SEED_DATA:true}"
+
+logging:
+  level:
+    mx.edu.secundaria.asistencia: INFO

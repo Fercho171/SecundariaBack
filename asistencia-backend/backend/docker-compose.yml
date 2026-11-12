@@ -1,0 +1,18 @@
+# Lee DB_USER / DB_PASSWORD desde .env (copia .env.example).
+# El backend NO usa este archivo solo: exporta las mismas variables para Spring.
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: asistencia-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: asistencia_escolar
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - asistencia_pgdata:/var/lib/postgresql/data
+
+volumes:
+  asistencia_pgdata:
